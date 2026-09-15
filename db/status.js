@@ -1,0 +1,12 @@
+ const STATUS={
+    SUCEESS:200,
+    ERROR:301,
+    SERVER_ERROR:500,
+    UNAUTHORIZED:401,
+    FORBIDDEN:403,
+    NOT_FOUND:404
+}
+
+module.exports={
+    STATUS
+}

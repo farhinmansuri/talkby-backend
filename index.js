@@ -30,6 +30,9 @@ app.use(bodyParser.json());
 const userRouter = require('./route/userRoute')
 app.use("/api/user", userRouter)
 
+const passwordRouter = require('./route/passwordRoute')
+app.use("/api/password", passwordRouter)
+
 const chatRouter = require("./route/chatRoute")
 app.use("/api/chat", chatRouter)
 
@@ -51,6 +54,6 @@ const io = new Server(server, {
 socketHandler(io);
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, "0.0.0.0",() => {
+server.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
 });

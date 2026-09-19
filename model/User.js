@@ -4,6 +4,13 @@ const User = new mongoose.Schema({
     middleName: String,
     lastName: String,
     email: String,
-    password: String
+    password: String,
+    resetPasswordOtp: {
+        type: String
+    },
+
+    resetPasswordOtpExpires: {
+        type: Date
+    }
 })
 module.exports = mongoose.model("users", User)

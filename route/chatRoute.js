@@ -35,7 +35,7 @@ router.get("/searchUser", async (req, resp) => {
                 { _id: self_id }
             ]
         })
-            .select('-password') // Optional: Exclude sensitive fields from results
+            .select('-password -resetPasswordOtp -resetPasswordOtpExpires') // Optional: Exclude sensitive fields from results
             .limit(20)
             .lean();
         const userIds = users.map(user => user._id);
@@ -143,7 +143,7 @@ router.get("/getMyConversations", async (req, resp) => {
                     );
 
                     const oppositeUser = await User.findById(oppositeUserId)
-                        .select("-password")
+                        .select("-password -resetPasswordOtp -resetPasswordOtpExpires")
                         .lean();
 
                     return {

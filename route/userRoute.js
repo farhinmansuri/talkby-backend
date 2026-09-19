@@ -4,12 +4,10 @@ const router = express.Router();
 const User = require("../model/User")
 
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { getSaltedPassword } = require('../utils/getSaltedPass');
 
-const getSaltedPassword = async (password) => {
-    const salt = await bcrypt.genSalt(10)
-    return await bcrypt.hash(password, salt)
-}
+
 
 
 
@@ -47,7 +45,7 @@ router.post("/register", async (req, resp) => {
                 };
                 jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, async (err, token) => {
                     if (err) throw err
-                    const savedUser = await User.findById(newUser.id).select('-password')
+                    const savedUser = await User.findById(newUser.id).select('-password -resetPasswordOtp -resetPasswordOtpExpires')
                     const finalUser = {
                         ...savedUser.toObject(),
                         token: token
@@ -96,7 +94,9 @@ router.post("/login", async (req, resp) => {
                     jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET,
                         async (err, token) => {
                             if (err) throw err
-                            user.password = null
+                            user.password = null;
+                            user.resetPasswordOtpExpires=null;
+                            user.resetPasswordOtp=null;
                             const finalUser = {
                                 ...user.toObject(),
                                 token: token

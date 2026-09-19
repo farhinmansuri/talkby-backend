@@ -33,6 +33,9 @@ app.use("/api/user", userRouter)
 const passwordRouter = require('./route/passwordRoute')
 app.use("/api/password", passwordRouter)
 
+const verifyToken=require("./middleware/auth_token")
+app.use(verifyToken)
+
 const chatRouter = require("./route/chatRoute")
 app.use("/api/chat", chatRouter)
 
